@@ -1,19 +1,34 @@
 Users start in a ramdomly generated maze of 15 by 15 proportions.
- - However, users can only see nine squares at a time: the square that they are on and the 8 surrounding squares
- 
- As players navigate through the maze in search of the EXIT, they encounter OBSTACLES (or mini games) at a certain frequency depending on the difficulty level of the maze.
+ - However, users can only see nine squares at a time: the square that they are 
+   on and the 8 surrounding squares
+-------------------------------------------------------------------------------------
+ As players navigate through the maze in search of the EXIT, they encounter OBSTACLES 
+ (or mini games) at a certain frequency depending on the difficulty level of the maze.
   - MINI GAME 1: "leapfrog"
   - MINI GAME 2: sudoku
   - MINI GAME 3: simon says
   - MINI GAME 4: memory
   - More to be added if time allows
-  
-If players lose a mini game, they lose a LIFE. If they lose three lives, they die and the game is over (Mwahaha)
-
-
+-------------------------------------------------------------------------------------
+If players lose a mini game, they lose a LIFE. If they lose three lives, they die 
+and the game is over (Mwahaha)
+-------------------------------------------------------------------------------------
 While navigating the maze a player is able to see:
   - His current position (indicated by yellow)
   - The path he can follow (indicated by white)
   - Thewalls of the maze (indicated by dark green)
   - How many lives he has (indicated in the TOOLBAR)
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+PRIORITIES 
+ 1) Constructing the maze and creating a working gameboard --> core, prereq for mini 
+    game implementation
+ 2) Implementing mini games 1 by 1 --> after a few any new mini games will be considered extra
+ 
+ WHO CAN TACKLE WHAT
+ individual tasks -- mini games, p much everything
+ collaborate on -- overall format of classes and how to connect mini games to the maze to
+ maintain organization
 
+TIMELINE
+ - Get it all doneeeee!!!
