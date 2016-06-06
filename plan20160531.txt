@@ -1,4 +1,4 @@
-Users start in a ramdomly generated maze of 15 by 15 proportions.
+Users start in a ramdomly generated maze of 24 by 24 proportions.
  - However, users can only see nine squares at a time: the square that they are 
    on and the 8 surrounding squares
 -------------------------------------------------------------------------------------
@@ -27,8 +27,27 @@ PRIORITIES
  
  WHO CAN TACKLE WHAT
  individual tasks -- mini games, p much everything
- collaborate on -- overall format of classes and how to connect mini games to the maze to
+ collaborate on -- overall format of classes and how to connect mini games to  the maze to
  maintain organization
 
-TIMELINE
- - Get it all doneeeee!!!
+TIMELINE:
+
+ DONE:
+
+ 6/5/16 - We finished the base creation for the maze!
+
+ PLANNED:
+
+ 6/6/16 - Finish Player class with health and all other info
+
+ 6/7/16 - Finish a "Rigged Tile" class that triggers a mini-game when the player steps on it
+
+ 6/9/16 - Finish at least one of the mini-games we have planned
+
+ 6/11/16 - Finish all the mini-games
+
+ 6/12/16 - Add polishing touches such as player visibility and difficulty
+
+ STATUS: Roughly on track
+
+
