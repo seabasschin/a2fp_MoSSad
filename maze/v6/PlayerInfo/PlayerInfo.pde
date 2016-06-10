@@ -20,5 +20,9 @@ class Player{
   public String toString(){
     return name;
   }
+  
+  int getLives(){
+   return lives;
+   }
     
 }
