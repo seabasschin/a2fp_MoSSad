@@ -2,7 +2,7 @@ Tile[][] maze = new Tile[25][25];
 Tile pos;
 
 void setup(){
-    size(625,625);
+    size(625,650);
     makeBase();
     GenMaze();
     startMaze();
@@ -176,7 +176,9 @@ void displayMaze(){
   }
 }
 
-
+void displayInfo(){
+    int lives = player.getlives();
+    }
 class Tile{
     private int x,y,xcor,ycor;
     boolean isWall, consDir, isVisable, hasPlayer;
