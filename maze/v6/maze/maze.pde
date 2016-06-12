@@ -1,5 +1,6 @@
 Tile[][] maze = new Tile[25][25];
 Tile pos;
+memory testMemory = new memory();
 
 void setup(){
     size(625,625);
@@ -9,8 +10,36 @@ void setup(){
 }
 
   void draw(){
-    displayMaze();
-    move();
+    if (key != 't'){
+      displayMaze();
+      move();
+      testMemory.setStarted(false);
+    }
+    if (key == 't'){
+      if (! testMemory.getStarted()){
+        testMemory.makeBoard();
+      }
+      fill(0);
+      //text(testMemory.getLives() > 0, 300, 300);
+    // while (testMemory.getLives() > 0 && ! testMemory.getSolved()){
+      testMemory.selectTile();
+      testMemory.checkForPair();
+      if (testMemory.pairs == 8){
+        key = 'o';
+      }
+    //}
+    
+    
+    if (testMemory.getLives() == 0){
+      testMemory.loseMinigame();
+    }
+    
+    if (testMemory.getSolved()){
+      testMemory.winMinigame();
+      
+    }
+    }
+  
   }
   
   void move(){
