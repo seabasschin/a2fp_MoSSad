@@ -4,6 +4,7 @@ boolean start = false;
 Player user = new Player(null, 0);
 memory playMemory = new memory();
 sudoku playSudoku = new sudoku();
+frogger playFrogger = new frogger();
 
 void setup(){
     size(625,625);
@@ -71,6 +72,9 @@ void setup(){
           playSudoku.played = true;
         }
       }
+      
+      else if (!playFrogger.played) {
+        playFrogger.frogger();
     }
   }
   

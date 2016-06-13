@@ -437,6 +437,6 @@ public class frogger extends minigame{
      cars[i].display();
     }
     frog.move();
-    if 
+    if (frog,getY < 30) {winMinigame();}
   }
 }
