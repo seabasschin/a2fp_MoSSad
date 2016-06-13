@@ -66,7 +66,7 @@ public class sudoku extends minigame {
   public sudoku(){
      started = false;
      played = false;
-     lives = 15;
+     lives = 1;
   }
   
   public void makeBoard(){

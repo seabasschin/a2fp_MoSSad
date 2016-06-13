@@ -1,16 +1,45 @@
 Tile[][] maze = new Tile[25][25];
 Tile pos;
+boolean start = false;
+Player user = new Player(null, 0);
 memory playMemory = new memory();
 sudoku playSudoku = new sudoku();
 
 void setup(){
     size(625,625);
-    makeBase();
-    GenMaze();
-    startMaze();
+    if (user.name == null || user.diff == 0){
+      fill(0);
+      rect(0,0,625,625);
+      textSize(10);
+      fill(255);
+      text("(Press the spacebar to continue)", 235,425);
+      textSize(32);
+      text("Welcome to the MoSSad maze. In order to complete your training and become a membor of our elite force, you must navigate your way to the green square of the maze before you run out of lives!", 50,75, 525,525);
+      if (keyPressed && key == ' '){
+        text("First, you must pick a code name: ", 50,75, 525,525);
+        while (keyPressed && keyCode != ENTER){
+          user.name += "Maddie";
+        }
+        text(user.name, 50, 275, 525, 525);
+      }
+      }
 }
 
   void draw(){
+    if (!(start) && user.name != null && user.diff != 0){
+      makeBase();
+      GenMaze();
+      startMaze();
+      start = true;
+    }
+    if (start){
+    if (! user.isAlive()){
+      fill(0);
+      rect(0.0,0.0,625.0,625.0);
+      textSize(32);
+      fill(255);
+      text(user.name + ", you died.", 150, 315);
+    }
     if (! (pos.isMiniGame || playMemory.started || playSudoku.started)){
       displayMaze();
       move();
@@ -37,9 +66,14 @@ void setup(){
           playSudoku.guessNum(key);
         }
         if (playSudoku.getLives() == 0){
-          
+          pos.setMiniGame(false);
+          playSudoku.started = false;
+          playSudoku.played = true;
+        }
+      }
+    }
   }
-  }
+  
   
   
   void move(){
@@ -133,7 +167,7 @@ void GenMaze(){
     int randomtile = (int)(Math.random() * frontier.size());
     Tile newPath = frontier.get(randomtile);
     newPath.makePath();
-    if (Math.random() < .05) {
+    if (Math.random() < .01*user.diff) {
       newPath.setMiniGame(true);
     }
     if (newPath.getX() < 24) {
