@@ -12,20 +12,19 @@ void setup(){
       rect(0,0,625,625);
       textSize(10);
       fill(255);
-      text("(Press the spacebar to continue)", 235,425);
+      text("(Click on the screen to continue)", 235,425);
       textSize(32);
       text("Welcome to the MoSSad maze. In order to complete your training and become a membor of our elite force, you must navigate your way to the green square of the maze before you run out of lives!", 50,75, 525,525);
-      if (keyPressed && key == ' '){
-        text("First, you must pick a code name: ", 50,75, 525,525);
-        while (keyPressed && keyCode != ENTER){
-          user.name += "Maddie";
-        }
-        text(user.name, 50, 275, 525, 525);
-      }
+      
       }
 }
 
   void draw(){
+    if (!(start) && mousePressed){
+        user.name = "Maddie";
+        user.diff = 5;
+     }
+         
     if (!(start) && user.name != null && user.diff != 0){
       makeBase();
       GenMaze();
@@ -38,13 +37,13 @@ void setup(){
       rect(0.0,0.0,625.0,625.0);
       textSize(32);
       fill(255);
-      text(user.name + ", you died.", 150, 315);
+      text("You died.", 150, 315);
     }
     if (! (pos.isMiniGame || playMemory.started || playSudoku.started)){
       displayMaze();
       move();
     }
-   /* else if (!playMemory.played){
+    else if (!playMemory.played){
      if (! (playMemory.getStarted())){
           playMemory.makeBoard();
         }
@@ -54,9 +53,11 @@ void setup(){
            pos.setMiniGame(false);
            playMemory.started = false;
            playMemory.played = true;
+           playSudoku.played = false;
+           playSudoku.started = false;
         }
       }
-      */
+      
       else if (!playSudoku.played){
         if(! (playSudoku.started)){
           playSudoku.makeBoard();
@@ -69,10 +70,14 @@ void setup(){
           pos.setMiniGame(false);
           playSudoku.started = false;
           playSudoku.played = true;
+          playMemory.played = false;
+          playMemory.started = false;
         }
       }
     }
   }
+
+  
   
   
   
