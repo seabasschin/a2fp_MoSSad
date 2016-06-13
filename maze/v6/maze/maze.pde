@@ -13,20 +13,19 @@ void setup(){
       rect(0,0,625,625);
       textSize(10);
       fill(255);
-      text("(Press the spacebar to continue)", 235,425);
+      text("(Click on the screen to continue)", 235,425);
       textSize(32);
-      text("Welcome to the MoSSad maze. In order to complete your training and become a membor of our elite force, you must navigate your way to the green square of the maze before you run out of lives!", 50,75, 525,525);
-      if (keyPressed && key == ' '){
-        text("First, you must pick a code name: ", 50,75, 525,525);
-        while (keyPressed && keyCode != ENTER){
-          user.name += "Maddie";
-        }
-        text(user.name, 50, 275, 525, 525);
-      }
+      text("Welcome to the MoSSad maze. In order to complete your training and become a membor of our elite force, you must navigate your way to the hidden green square in the maze before you run out of lives!", 50,75, 525,525);
+      
       }
 }
 
   void draw(){
+    if (!(start) && mousePressed){
+        user.name = "Maddie";
+        user.diff = 5;
+     }
+         
     if (!(start) && user.name != null && user.diff != 0){
       makeBase();
       GenMaze();
@@ -39,25 +38,36 @@ void setup(){
       rect(0.0,0.0,625.0,625.0);
       textSize(32);
       fill(255);
-      text(user.name + ", you died.", 150, 315);
+      text("You died.", 150, 315);
     }
     if (! (pos.isMiniGame || playMemory.started || playSudoku.started)){
       displayMaze();
       move();
     }
-   /* else if (!playMemory.played){
+    else if (!playMemory.played){
      if (! (playMemory.getStarted())){
           playMemory.makeBoard();
         }
+        // print(playMemory.lives);
         playMemory.selectTile();
         playMemory.checkForPair();
         if (playMemory.pairs == 8){
            pos.setMiniGame(false);
            playMemory.started = false;
            playMemory.played = true;
+           playSudoku.played = false;
+           playSudoku.started = false;
+        }
+        if (playMemory.lives == 0){
+          user.loseLife();
+          pos.setMiniGame(false);
+           playMemory.started = false;
+           playMemory.played = true;
+           playSudoku.played = false;
+           playSudoku.started = false;
         }
       }
-      */
+      
       else if (!playSudoku.played){
         if(! (playSudoku.started)){
           playSudoku.makeBoard();
@@ -67,16 +77,21 @@ void setup(){
           playSudoku.guessNum(key);
         }
         if (playSudoku.getLives() == 0){
+          user.loseLife();
           pos.setMiniGame(false);
           playSudoku.started = false;
           playSudoku.played = true;
+          playMemory.played = false;
+          playMemory.started = false;
         }
       }
       
       else if (!playFrogger.played) {
-        playFrogger.frogger();
+        playFrogger.play();
     }
   }
+  }
+  
   
   
   
@@ -212,6 +227,8 @@ void GenMaze(){
     
     frontier.remove(maze[newPath.getX()][newPath.getY()]);
   }
+  if (maze[24][24].isAPath()) {maze[24][24].setFinish(maze[24][24]);}
+  else {maze[24][23].setFinish(maze[24][23]);}
 }
 
 boolean isNeighbor(Tile t) {
@@ -246,6 +263,7 @@ void displayMaze(){
   for(Tile[] i: maze){
     for(Tile j : i){
        j.displayTile();
+       j.wingame();
     }
   }
 }
@@ -253,7 +271,7 @@ void displayMaze(){
 
 class Tile{
     private int x,y,xcor,ycor;
-    boolean isWall, consDir, isVisable, hasPlayer, isMiniGame;
+    boolean isWall, consDir, isVisable, hasPlayer, isMiniGame, isFinish;
     int wgt;
     
     
@@ -267,6 +285,7 @@ class Tile{
         isVisable = false;
         hasPlayer = false;
         isMiniGame = false;
+        isFinish = false;
     }
     void setMiniGame(boolean b){
       isMiniGame = b;
@@ -291,6 +310,10 @@ class Tile{
     
     void makeVis(){
       isVisable = true;
+    }
+    
+    void setFinish(Tile t){
+      t.isFinish = true;
     }
     
     
@@ -398,6 +421,11 @@ class Tile{
       return !(isWall);
     }
     
+    boolean isFinish() {
+      return isFinish;
+    }
+
+    
     void displayTile(){
       if(hasPlayer){
         fill(178,102,255);
@@ -412,6 +440,11 @@ class Tile{
           fill(255,153,51);
           rect((float)xcor, (float)ycor, 25.0,25.0);
         }
+        else if (isFinish) {
+          fill(0,155,0);
+          rect((float)xcor, (float)ycor, 25.0, 25.0);
+        }
+          
         else{
          fill(255);
          rect((float)xcor, (float)ycor, 25.0,25.0);
@@ -420,6 +453,12 @@ class Tile{
       else{
         fill(125,125,125);
         rect((float)xcor, (float)ycor, 25.0,25.0);
+      }
+    }
+    void wingame(){
+      if (hasPlayer && isFinish) {
+        background(255);
+        text("yay. you are now one of us. @MoSSad",50,75, 525,525);
       }
     }
 }
