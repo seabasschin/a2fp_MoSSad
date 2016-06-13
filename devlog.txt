@@ -49,3 +49,15 @@ DEVLOG:
 
   in class: No class
   at home: Shaik manaaged to create a simplified version of the Prim's maze generation alogrithm add added Version 3 of the maze file. More inscpection os needed however to verify the legitmacy of the maze.
+    Maddie started working on the memory mini game.
+    
+  DAY 25 (6 11 2016):
+    
+    in class: No class
+    at home: Maddie worked on memory and started sudoku at home, didn't push until a lot of kinks were fixed
+    
+  DAY 6 (6 12 2016):
+    
+    in class: No class
+    at home: Maddie continued to work on (and finished) the two minigames and constructed a start and end to the game as a whole. She also figured out how to make the player move using the arrowkeys and how to generate the spots in the maze that generates the minigames. 
+
