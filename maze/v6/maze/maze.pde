@@ -15,7 +15,11 @@ void setup(){
       fill(255);
       text("(Click on the screen to continue)", 235,425);
       textSize(32);
+<<<<<<< HEAD
       text("Welcome to the MoSSad maze. In order to complete your training and become a membor of our elite force, you must navigate your way to the hidden green square in the maze before you run out of lives!", 50,75, 525,525);
+=======
+      text("Welcome to the MoSSad maze. In order to complete your training and become a membor of our elite force, you must navigate your way to the green square of the maze before you run out of lives!", 50,75, 525,525);
+>>>>>>> origin/master
       
       }
 }
@@ -90,7 +94,11 @@ void setup(){
         playFrogger.play();
     }
   }
+<<<<<<< HEAD
   }
+=======
+
+>>>>>>> origin/master
   
   
   

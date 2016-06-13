@@ -20,9 +20,12 @@ class Player{
   public String toString(){
     return name;
   }
+<<<<<<< HEAD
   int getdiff() {
     return diff;
   }
+=======
+>>>>>>> origin/master
   
   int getLives(){
    return lives;
