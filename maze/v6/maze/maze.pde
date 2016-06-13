@@ -47,10 +47,19 @@ void setup(){
      if (! (playMemory.getStarted())){
           playMemory.makeBoard();
         }
+        // print(playMemory.lives);
         playMemory.selectTile();
         playMemory.checkForPair();
         if (playMemory.pairs == 8){
            pos.setMiniGame(false);
+           playMemory.started = false;
+           playMemory.played = true;
+           playSudoku.played = false;
+           playSudoku.started = false;
+        }
+        if (playMemory.lives == 0){
+          user.loseLife();
+          pos.setMiniGame(false);
            playMemory.started = false;
            playMemory.played = true;
            playSudoku.played = false;
@@ -67,6 +76,7 @@ void setup(){
           playSudoku.guessNum(key);
         }
         if (playSudoku.getLives() == 0){
+          user.loseLife();
           pos.setMiniGame(false);
           playSudoku.started = false;
           playSudoku.played = true;

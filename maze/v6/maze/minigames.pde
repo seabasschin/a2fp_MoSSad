@@ -66,7 +66,7 @@ public class sudoku extends minigame {
   public sudoku(){
      started = false;
      played = false;
-     lives = 1;
+     lives = 15;
   }
   
   public void makeBoard(){
@@ -270,14 +270,14 @@ public class memory extends minigame{
             tileUp1 = j;
             textSize(32);
             fill(0);
-            text("TILE 1!", j.getX() + 50, j.getY() + 50);
+            //text("TILE 1!", j.getX() + 50, j.getY() + 50);
           }
           else if (tileUp2 == null && j != tileUp1 && j.getColorRow() != 8){
             j.flipTile();
             tileUp2 = j;
             textSize(32);
             fill(0);
-            text("TILE 2!", j.getX() + 50, j.getY() + 50);
+            // text("TILE 2!", j.getX() + 50, j.getY() + 50);
             }
          }
         }
@@ -302,14 +302,14 @@ public class memory extends minigame{
       }
      else {
       this.die();
+      wait(1000);
       tileUp1.flipTile();
       tileUp2.flipTile();
       fill(0);
-      die();
-      text("Try again!", tileUp2.getX() + 10, tileUp2.getY() + 10);
+      textSize(20);
+      text("Try again!", tileUp2.getX() + 25, tileUp2.getY() + 20);
       tileUp1 = null;
       tileUp2 = null;
-      wait(1000);
       }
     }
   }
