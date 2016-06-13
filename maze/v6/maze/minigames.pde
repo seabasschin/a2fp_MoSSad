@@ -43,6 +43,140 @@ public abstract class minigame{
   public void loseMinigame(){}
 }
 
+//~~~~~~~~~~~~~~~~~~~~MINIGAME SUDOKU~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+public class sudoku extends minigame {
+  
+  //Inst vars
+  public int[][] beginningGrid = {{0,1,6,9,8,3,0,0,0}, {8,0,2,0,5,0,1,0,4},{0,7,9,0,4,0,0,0,0},{0,9,0,0,6,0,5,0,3},{3,0,0,0,0,9,0,7,2},{1,0,8,0,0,7,4,6,0},{2,0,0,0,0,4,0,0,0},{0,0,0,1,7,0,0,0,6},{0,4,1,0,0,5,0,8,7}};
+  public sudokuTile[][] playerGrid = new sudokuTile[9][9];
+  public int[][] answerGrid = {{4,1,6,9,8,3,7,2,5},
+                               {8,3,2,7,5,6,1,9,4},
+                               {5,7,9,2,4,1,6,3,8},
+                               {7,9,6,8,6,2,5,1,3},
+                               {3,6,2,4,1,9,8,7,2},
+                               {1,2,8,5,3,7,4,6,9},
+                               {2,8,7,6,9,4,3,5,1},
+                               {9,5,3,1,7,8,2,4,6},
+                               {6,4,1,3,2,5,9,8,7}};
+  public boolean started, played, isTileHighlighted;
+  public sudokuTile tileHighlighted;
+  
+  //Methods
+  public sudoku(){
+     started = false;
+     played = false;
+  }
+  
+  public void makeBoard(){
+    int ctr = 0;
+    for (int i = 0; i < playerGrid.length; i++){
+      for (int j = 0; j < playerGrid.length; j++){
+        playerGrid[i][j] = new sudokuTile(i,j, beginningGrid[i][j]);
+        playerGrid[i][j].displayTile();
+      }
+    }  
+    this.started = true;
+  }
+
+
+public void selectTile(){
+    boolean isSelected = mousePressed;
+    if (isSelected){
+    for (sudokuTile[] i: playerGrid){
+     for (sudokuTile j: i){
+       if (mouseX > j.getX() && mouseY > j.getY()){
+         if( mouseX - j.getX() < 69 && mouseY - j.getY() < 69){
+           if (!isTileHighlighted && j.num == 0){
+             j.highlightSquare();
+             tileHighlighted = j;
+           }
+         }
+        }
+       }
+     }
+    }
+    }
+    
+    public void guessNum(int i){
+    if(tileHighlighted.getNum() == i){
+      tileHighlighted.num = i;
+      tileHighlighted.displayTile();
+      tileHighlighted = null;
+      isTileHighlighted = false;
+    }
+    else{
+      die();
+      tileHighlighted.displayTile();
+      tileHighlighted = null;
+      isTileHighlighted = false;
+    }
+  }
+}
+    
+public class sudokuTile{
+  
+  //Inst vars
+  public int num;
+  public int x;
+  public int y;
+  
+  //Methods
+  public sudokuTile(int xcor, int ycor, int number){
+    x = xcor * 69;
+    y = ycor * 69;
+    num = number;
+  }
+  
+  public void displayTile(){
+    fill(255);
+    rect((float)this.getX(), (float)this.getY(), 69, 69);
+    textSize(25);
+    fill(0);
+    if (num != 0){
+      text(num, this.getX() + 30, this.getY() + 30); 
+    }
+  }
+  
+  
+    
+    
+  
+  public void highlightSquare(){
+    fill(255,51,153);
+    rect((float)this.getX(), (float)this.getY(), 69, 69);
+    textSize(10);
+    fill(0);
+    text("Type the number you think goes here", this.getX() + 5, this.getY() + 5, 69, 69); 
+  }
+  
+  
+    
+  
+  public int getNum(){
+    return num;
+  }
+  
+  public int getX(){
+    return x;
+  }
+  
+  public int getY(){
+    return y;
+  }
+  
+  
+}
+               
+    
+    
+  
+
+
+
+
+
+
 //~~~~~~~~~~~~~~~~~~~~MINIGAME MEMORY~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 public class memory extends minigame{
   
@@ -50,18 +184,19 @@ public class memory extends minigame{
   private memoryTile[][] grid; 
   public memoryTile tileUp1;
   public memoryTile tileUp2;
-  private boolean started;
+  public boolean started;
   public int pairs;
+  public boolean played;
   
   
   // Methods
   public void wait(int time){
     int ctr = millis();
     int i = 0;
-    fill(0);
-    text("Pair found!", tileUp1.getX() + 10, tileUp1.getY() + 75);
-    fill(0);
-    text("Pair found!", tileUp2.getX() + 10, tileUp2.getY() + 75);
+    //fill(0);
+    //text("Pair found!", tileUp1.getX() + 10, tileUp1.getY() + 75);
+    //fill(0);
+    //text("Pair found!", tileUp2.getX() + 10, tileUp2.getY() + 75);
     while(millis() < ctr + time){
       i++;
     }
@@ -75,6 +210,7 @@ public class memory extends minigame{
     lives = 5;
     solved = false;
     pairs = 0;
+    played = false;
   }
   
   
@@ -86,13 +222,19 @@ public class memory extends minigame{
      for (memoryTile j: i){
        if (mouseX > j.getX() && mouseY > j.getY()){
          if( mouseX - j.getX() < 150 && mouseY - j.getY() < 150){
-          if (tileUp1 == null){ 
+          if (tileUp1 == null && j.getColorRow() != 8){ 
             j.flipTile();
             tileUp1 = j;
+            textSize(32);
+            fill(0);
+            text("TILE 1!", j.getX() + 50, j.getY() + 50);
           }
-          else if (tileUp2 == null && j != tileUp1){
+          else if (tileUp2 == null && j != tileUp1 && j.getColorRow() != 8){
             j.flipTile();
             tileUp2 = j;
+            textSize(32);
+            fill(0);
+            text("TILE 2!", j.getX() + 50, j.getY() + 50);
             }
          }
         }
@@ -106,8 +248,10 @@ public class memory extends minigame{
    if (tileUp2 != null && tileUp1 != null){
      if (tileUp1.getColorRow() == tileUp2.getColorRow() && tileUp2.getColorRow() != 8){
 
-        tileUp1.displayColor(8);
-        tileUp2.displayColor(8);
+       tileUp1.setColorRow(8);
+       tileUp2.setColorRow(8);
+       tileUp1.displayColor(8);
+       tileUp2.displayColor(8);
        // wait(1000);
         tileUp1 = null;
         tileUp2 = null;
@@ -118,9 +262,11 @@ public class memory extends minigame{
       tileUp1.flipTile();
       tileUp2.flipTile();
       fill(0);
+      die();
       text("Try again!", tileUp2.getX() + 10, tileUp2.getY() + 10);
       tileUp1 = null;
       tileUp2 = null;
+      wait(1000);
       }
     }
   }
@@ -134,16 +280,17 @@ public class memory extends minigame{
   }
   
   public void makeBoard(){
-    this.setStarted(true);
     int ctr = 0;
     for (int i = 0; i < grid.length; i++){
       for (int j = 0; j < grid.length; j++){
         grid[i][j] = new memoryTile(j,i, ctr % 8);
         grid[i][j].displayColor();
         ctr++;
-      }
-    }      
-}
+        }
+      }  
+      this.started = true;
+    }
+    
 }
 
 public class memoryTile{
@@ -195,6 +342,10 @@ public class memoryTile{
   
   public int getColorRow(){
     return colorRow;
+  }
+  
+  public void setColorRow(int n){
+    colorRow = n;
   }
   
   public int getX(){

@@ -1,6 +1,7 @@
 Tile[][] maze = new Tile[25][25];
 Tile pos;
-memory testMemory = new memory();
+memory playMemory = new memory();
+sudoku playSudoku = new sudoku();
 
 void setup(){
     size(625,625);
@@ -10,39 +11,54 @@ void setup(){
 }
 
   void draw(){
-    if (key != 't'){
+    if (! (pos.isMiniGame || playMemory.started || playSudoku.started)){
       displayMaze();
       move();
     }
-    if (pos.isMiniGame){
-      if (! testMemory.getStarted()){
-        testMemory.makeBoard();
+   /* else if (!playMemory.played){
+     if (! (playMemory.getStarted())){
+          playMemory.makeBoard();
+        }
+        playMemory.selectTile();
+        playMemory.checkForPair();
+        if (playMemory.pairs == 8){
+           pos.setMiniGame(false);
+           playMemory.started = false;
+           playMemory.played = true;
+        }
       }
-      fill(0);
-      //text(testMemory.getLives() > 0, 300, 300);
-    // while (testMemory.getLives() > 0 && ! testMemory.getSolved()){
-      testMemory.selectTile();
-      testMemory.checkForPair();
-      if (testMemory.pairs == 8){
-        key = 'o';
-      }
-      if (testMemory.lives == 0){
-      testMemory.loseMinigame();
-    }
-    //}
-    
-    
-    if (testMemory.getLives() == 0){
-      testMemory.loseMinigame();
-    }
-    
-    if (testMemory.getSolved()){
-      testMemory.winMinigame();
-      
-    }
-    }
-  
+      */
+      else if (!playSudoku.played){
+        if(! (playSudoku.started)){
+          playSudoku.makeBoard();
+        } 
+        playSudoku.selectTile();
+        //playSudoku.guessNum();
   }
+  }
+  
+  void wePlayinMemory(){
+    if (! playMemory.getStarted()){
+          playMemory.makeBoard();
+        }
+        while (playMemory.getLives() > 0 && playMemory.pairs < 8){
+          playMemory.selectTile();
+          playMemory.checkForPair();
+          if (playMemory.pairs == 8){
+            pos.setMiniGame(false);
+            pos.displayTile();
+            return;
+          }
+          if (playMemory.lives == 0){
+            playMemory.loseMinigame();
+          }
+          if (playMemory.getLives() == 0){
+            playMemory.loseMinigame();
+          }
+    
+          
+        }
+   }
   
   void move(){
     if(keyPressed){
@@ -135,7 +151,7 @@ void GenMaze(){
     int randomtile = (int)(Math.random() * frontier.size());
     Tile newPath = frontier.get(randomtile);
     newPath.makePath();
-    if (Math.random() < .15) {
+    if (Math.random() < .05) {
       newPath.setMiniGame(true);
     }
     if (newPath.getX() < 24) {
