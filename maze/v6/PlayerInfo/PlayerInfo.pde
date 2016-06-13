@@ -24,5 +24,10 @@ class Player{
   int getLives(){
    return lives;
    }
-    
+   
+  int getdiff() {
+    return diff;
+  }
+  
+  void 
 }
