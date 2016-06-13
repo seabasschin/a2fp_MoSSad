@@ -11,7 +11,7 @@ void setup(){
 
 
 
-void GenMaze(){
+void GenMaze(){//creates randomly generated maze
   Tile start = maze[0][0]; 
   start.makePath();
   ArrayList<Tile> frontier = new ArrayList<Tile>();
@@ -106,7 +106,7 @@ void display(){
 
 class Tile{
     private int x,y;
-    boolean isWall, consDir;
+    boolean isWall, consDir, viewable;
     int wgt;
     
     
@@ -114,22 +114,11 @@ class Tile{
         x = xcor;
         y = ycor;
         isWall = type;
+        viewable = false;
     }
-    
-    void setWgt(int val){
-      wgt = val;
-    }
-    
-    
-    
-    int getWgt(){
-      return wgt;
-    }
-    
     void setDir(boolean x){
       consDir = x;
     }
-    
     
     void makeWall(){
         isWall = true;
@@ -153,6 +142,14 @@ class Tile{
     
     boolean isAPath(){
       return !(isWall);
+    }
+    
+    boolean isViewable() {
+      return viewable;
+    }
+    
+    void changeVisibility() {
+      viewable = !viewable;
     }
     
     void displayTile(){
