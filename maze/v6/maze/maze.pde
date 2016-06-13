@@ -13,9 +13,8 @@ void setup(){
     if (key != 't'){
       displayMaze();
       move();
-      testMemory.setStarted(false);
     }
-    if (key == 't'){
+    if (pos.isMiniGame){
       if (! testMemory.getStarted()){
         testMemory.makeBoard();
       }
@@ -27,6 +26,9 @@ void setup(){
       if (testMemory.pairs == 8){
         key = 'o';
       }
+      if (testMemory.lives == 0){
+      testMemory.loseMinigame();
+    }
     //}
     
     
@@ -61,6 +63,10 @@ void setup(){
         keyPressed = false;
       }
     }
+  }
+  
+  Tile posOn(){
+    return pos;
   }
   
   void moveUp(){
@@ -129,6 +135,9 @@ void GenMaze(){
     int randomtile = (int)(Math.random() * frontier.size());
     Tile newPath = frontier.get(randomtile);
     newPath.makePath();
+    if (Math.random() < .15) {
+      newPath.setMiniGame(true);
+    }
     if (newPath.getX() < 24) {
       if (isNeighbor(maze[newPath.getX()+1][newPath.getY()])) {
         frontier.add(maze[newPath.getX()+1][newPath.getY()]);
@@ -208,7 +217,7 @@ void displayMaze(){
 
 class Tile{
     private int x,y,xcor,ycor;
-    boolean isWall, consDir, isVisable, hasPlayer;
+    boolean isWall, consDir, isVisable, hasPlayer, isMiniGame;
     int wgt;
     
     
@@ -221,8 +230,15 @@ class Tile{
         isWall = type;
         isVisable = false;
         hasPlayer = false;
+        isMiniGame = false;
+    }
+    void setMiniGame(boolean b){
+      isMiniGame = b;
     }
     
+    boolean getMiniGame(){
+      return isMiniGame;
+    }
     
     void movePlayerHere(){
       hasPlayer = true;
@@ -355,6 +371,10 @@ class Tile{
        if(isWall){
          fill(0);
          rect((float)xcor, (float)ycor, 25.0,25.0);
+        }
+        else if (isMiniGame){
+          fill(255,153,51);
+          rect((float)xcor, (float)ycor, 25.0,25.0);
         }
         else{
          fill(255);

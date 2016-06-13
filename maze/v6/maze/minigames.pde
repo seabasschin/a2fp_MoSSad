@@ -47,7 +47,6 @@ public abstract class minigame{
 public class memory extends minigame{
   
   //Inst vars
-  private int dimension;
   private memoryTile[][] grid; 
   public memoryTile tileUp1;
   public memoryTile tileUp2;
@@ -56,9 +55,20 @@ public class memory extends minigame{
   
   
   // Methods
+  public void wait(int time){
+    int ctr = millis();
+    int i = 0;
+    fill(0);
+    text("Pair found!", tileUp1.getX() + 10, tileUp1.getY() + 75);
+    fill(0);
+    text("Pair found!", tileUp2.getX() + 10, tileUp2.getY() + 75);
+    while(millis() < ctr + time){
+      i++;
+    }
+  }
+  
   public memory(){
-    int dimension = 4;
-    grid = new memoryTile[dimension][dimension];
+    grid = new memoryTile[4][4];
     tileUp1 = null;
     tileUp2 = null;
     started = false;
@@ -67,22 +77,7 @@ public class memory extends minigame{
     pairs = 0;
   }
   
-  public void play(){
-    if (! getStarted()){
-      makeBoard();
-      setLives(5);
-      setSolved(false);
-    }
-    while (lives > 0 && !getSolved()){
-      checkForPair();
-    }
-    if (lives == 0){
-      loseMinigame();
-    }
-    if (getSolved()){
-      winMinigame();
-    }
-  }
+  
   
   public void selectTile(){
     boolean isSelected = mousePressed;
@@ -98,24 +93,22 @@ public class memory extends minigame{
           else if (tileUp2 == null && j != tileUp1){
             j.flipTile();
             tileUp2 = j;
+            }
          }
         }
        }
      }
     }
     }
-  }
+  
   
   public void checkForPair(){
    if (tileUp2 != null && tileUp1 != null){
      if (tileUp1.getColorRow() == tileUp2.getColorRow() && tileUp2.getColorRow() != 8){
-        fill(0);
-        text("Pair found!", tileUp1.getX() + 10, tileUp1.getY() + 100);
-        fill(0);
-        text("Pair found!", tileUp2.getX() + 10, tileUp2.getY() + 100);
-        delay(1500);
-        // tileUp1.displayColor(8);
-        // tileUp2.displayColor(8);
+
+        tileUp1.displayColor(8);
+        tileUp2.displayColor(8);
+       // wait(1000);
         tileUp1 = null;
         tileUp2 = null;
         pairs++;
@@ -126,8 +119,6 @@ public class memory extends minigame{
       tileUp2.flipTile();
       fill(0);
       text("Try again!", tileUp2.getX() + 10, tileUp2.getY() + 10);
-      delay(1500);
-      
       tileUp1 = null;
       tileUp2 = null;
       }
@@ -152,6 +143,7 @@ public class memory extends minigame{
         ctr++;
       }
     }      
+}
 }
 
 public class memoryTile{
@@ -212,7 +204,6 @@ public class memoryTile{
   public int getY(){
     return y;
   }
- 
 
-}
+
 }
