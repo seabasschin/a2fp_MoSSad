@@ -73,7 +73,7 @@ public class sudoku extends minigame {
     for (int i = 0; i < playerGrid.length; i++){
       for (int j = 0; j < playerGrid.length; j++){
         playerGrid[i][j] = new sudokuTile(i,j, beginningGrid[i][j]);
-        playerGrid[i][j].displayTile();
+        playerGrid[i][j].displayGivenTile();
       }
     }  
     this.started = true;
@@ -101,13 +101,13 @@ public void selectTile(){
     public void guessNum(int i){
     if(tileHighlighted.getNum() == i){
       tileHighlighted.num = i;
-      tileHighlighted.displayTile();
-      tileHighlighted = null;
-      isTileHighlighted = false;
+      tileHighlighted.displayPlayerTile();
+      // tileHighlighted = null;
+      // isTileHighlighted = false;
     }
     else{
       die();
-      tileHighlighted.displayTile();
+      tileHighlighted.displayGivenTile();
       tileHighlighted = null;
       isTileHighlighted = false;
     }
@@ -128,7 +128,18 @@ public class sudokuTile{
     num = number;
   }
   
-  public void displayTile(){
+  public void displayPlayerTile(){
+    fill(255);
+    rect((float)this.getX(), (float)this.getY(), 69, 69);
+    textSize(25);
+    fill(178,102,255);
+    if (num != 0){
+      text(num, this.getX() + 30, this.getY() + 30); 
+    }
+  }
+    
+  
+  public void displayGivenTile(){
     fill(255);
     rect((float)this.getX(), (float)this.getY(), 69, 69);
     textSize(25);

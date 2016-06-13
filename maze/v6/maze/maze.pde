@@ -33,48 +33,28 @@ void setup(){
           playSudoku.makeBoard();
         } 
         playSudoku.selectTile();
-        //playSudoku.guessNum();
+        if (playSudoku.isTileHighlighted){
+          playSudoku.guessNum((int) key);
+        }
   }
   }
   
-  void wePlayinMemory(){
-    if (! playMemory.getStarted()){
-          playMemory.makeBoard();
-        }
-        while (playMemory.getLives() > 0 && playMemory.pairs < 8){
-          playMemory.selectTile();
-          playMemory.checkForPair();
-          if (playMemory.pairs == 8){
-            pos.setMiniGame(false);
-            pos.displayTile();
-            return;
-          }
-          if (playMemory.lives == 0){
-            playMemory.loseMinigame();
-          }
-          if (playMemory.getLives() == 0){
-            playMemory.loseMinigame();
-          }
-    
-          
-        }
-   }
   
   void move(){
     if(keyPressed){
-      if (key == 'w'){
+      if (keyCode == UP){
         moveUp();
         keyPressed = false;
       }
-      if (key == 's'){
+      if (keyCode == DOWN){
         moveDown();
         keyPressed = false;
       }
-      if (key == 'a'){
+      if (keyCode == LEFT){
         moveLeft();
         keyPressed = false;
       }
-      if (key == 'd'){
+      if (keyCode == RIGHT){
         moveRight();
         keyPressed = false;
       }
