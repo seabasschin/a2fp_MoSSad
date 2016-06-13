@@ -33,9 +33,11 @@ void setup(){
           playSudoku.makeBoard();
         } 
         playSudoku.selectTile();
-        if (playSudoku.isTileHighlighted){
-          playSudoku.guessNum((int) key);
+        if (playSudoku.highlightedTile != null && keyPressed){
+          playSudoku.guessNum(key);
         }
+        if (playSudoku.getLives() == 0){
+          
   }
   }
   

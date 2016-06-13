@@ -59,13 +59,14 @@ public class sudoku extends minigame {
                                {2,8,7,6,9,4,3,5,1},
                                {9,5,3,1,7,8,2,4,6},
                                {6,4,1,3,2,5,9,8,7}};
-  public boolean started, played, isTileHighlighted;
-  public sudokuTile tileHighlighted;
+  public boolean started, played, aTileIsHighlighted;
+  public sudokuTile highlightedTile;
   
   //Methods
   public sudoku(){
      started = false;
      played = false;
+     lives = 15;
   }
   
   public void makeBoard(){
@@ -87,9 +88,9 @@ public void selectTile(){
      for (sudokuTile j: i){
        if (mouseX > j.getX() && mouseY > j.getY()){
          if( mouseX - j.getX() < 69 && mouseY - j.getY() < 69){
-           if (!isTileHighlighted && j.num == 0){
-             j.highlightSquare();
-             tileHighlighted = j;
+           if (!aTileIsHighlighted && j.num == 0){
+             highlightedTile = j;
+             highlightedTile.highlightSquare();          
            }
          }
         }
@@ -98,20 +99,51 @@ public void selectTile(){
     }
     }
     
-    public void guessNum(int i){
-    if(tileHighlighted.getNum() == i){
-      tileHighlighted.num = i;
-      tileHighlighted.displayPlayerTile();
-      // tileHighlighted = null;
-      // isTileHighlighted = false;
+    public void guessNum(char n){
+      int i = 0;
+      if (n == '1'){
+        i = 1;
+      }
+      if (n == '2'){
+        i = 2;
+      }
+      if (n == '3'){
+        i = 3;
+      }
+      if (n == '4'){
+        i = 4;
+      }
+      if (n == '5'){
+        i = 5;
+      }
+      if (n == '6'){
+        i = 6;
+      }
+      if (n == '7'){
+        i = 7;
+      }
+      if (n == '8'){
+        i = 8;
+      }
+      if (n == '9'){
+        i = 9;
+      }
+      
+      if(answerGrid[highlightedTile.getX()/69][highlightedTile.getY()/69] == i){
+      highlightedTile.num = i;
+      highlightedTile.displayPlayerTile();
+      highlightedTile = null;
+      aTileIsHighlighted = false;
     }
     else{
       die();
-      tileHighlighted.displayGivenTile();
-      tileHighlighted = null;
-      isTileHighlighted = false;
+      highlightedTile.displayGivenTile();
+      highlightedTile = null;
+      aTileIsHighlighted = false;
     }
   }
+  
+  
 }
     
 public class sudokuTile{
