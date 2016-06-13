@@ -406,17 +406,26 @@ public class memoryTile{
 public class frogger extends minigame{
   
   //Inst vars
-  Frog frogger;
+  Frog frog;
   Car[] cars = new Car[user.getdiff()*5];
   boolean started = false;
+  boolean played = false;
 
   
   
   // Methods
   
+    public void setStarted(boolean b){
+    started = b;
+  }
+  
+  public boolean getStarted(){
+    return started;
+  }
+  
   public frogger(){ 
     if (started == false) {
-    frogger = new Frog(311, 600);
+    frog = new Frog(311, 600);
     for (int i = 0; i < cars.length; i ++ ) {
      cars[i] = new Car(color(random(255),random(150)+100,random(255)),(int)random(2),i*25,random(5,12));
     }
@@ -427,6 +436,7 @@ public class frogger extends minigame{
      cars[i].move();
      cars[i].display();
     }
-    frogger.move();
+    frog.move();
+    if 
   }
 }
